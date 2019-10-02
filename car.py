@@ -2,48 +2,47 @@ import pygame
 WHITE = (255, 255, 255)
  
 class Car(pygame.sprite.Sprite):
-    #This class represents a car. It derives from the "Sprite" class in Pygame.
+    #Deklaracja klasy na podstawie klasy Sprite z biblioteki Pygame.
     
     def __init__(self, color, width, height, speed):
-        # Call the parent class (Sprite) constructor
+        # Konstruktor tworzący samochód
         super().__init__()
         
-        # Pass in the color of the car, and its x and y position, width and height.
-        # Set the background color and set it to be transparent
+        # Domyślne parametry samochodu
         self.image = pygame.Surface([width, height])
         self.image.fill(WHITE)
         self.image.set_colorkey(WHITE)
 
-        #Initialise attributes of the car.
-        self.width=width
-        self.height=height
+        #Parametry samochodu podane przez programistę.
+        self.width= width
+        self.height= height
         self.color = color
         self.speed = speed
         
-        # Draw the car (a rectangle!)
+        # Narysowanie samochodu
         pygame.draw.rect(self.image, self.color, [0, 0, self.width, self.height])
         
-        # Instead we could load a proper pciture of a car...
+        # później zastąpimy prostokąt grafiką
         # self.image = pygame.image.load("car.png").convert_alpha()
  
-        # Fetch the rectangle object that has the dimensions of the image.
+        # dopasowanie rozmiarów.
         self.rect = self.image.get_rect()
 
-    def moveRight(self, pixels):
+    def moveRight(self, pixels): #ruch w prawo
         self.rect.x += pixels
  
-    def moveLeft(self, pixels):
+    def moveLeft(self, pixels): #ruch w lewo
         self.rect.x -= pixels
  
-    def moveForward(self, speed):
+    def moveForward(self, speed): #ruch do przodu
         self.rect.y += self.speed * speed / 20
  
-    def moveBackward(self, speed):
+    def moveBackward(self, speed): #ruch do tyłu
         self.rect.y -= self.speed * speed / 20
  
-    def changeSpeed(self, speed):
+    def changeSpeed(self, speed): #zmiana prędkości samochodu
         self.speed = speed
  
-    def repaint(self, color):
+    def repaint(self, color): #ponowne narysowanie samochodu
         self.color = color
         pygame.draw.rect(self.image, self.color, [0, 0, self.width, self.height])
