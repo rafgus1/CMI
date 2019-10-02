@@ -1,36 +1,36 @@
 import pygame, random
-#Let's import the Car Class
+#importowanie klasy Car
 from car import Car
 pygame.init()
  
-GREEN = (20, 255, 140)
+GREEN = (20, 255, 140) #deklarowanie kolorów
 GREY = (210, 210 ,210)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 PURPLE = (255, 0, 255)
         
-SCREENWIDTH=400
+SCREENWIDTH=400 #ustalenie rozmiarów okna gry
 SCREENHEIGHT=500
  
 size = (SCREENWIDTH, SCREENHEIGHT)
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Car Racing")
+screen = pygame.display.set_mode(size) #włączenie okna z grą
+pygame.display.set_caption("Car Racing") #nadanie tytułu dla okna
  
-#This will be a list that will contain all the sprites we intend to use in our game.
+#Zadeklarowanie zbioru graczy
 all_sprites_list = pygame.sprite.Group()
  
-playerCar = Car(RED, 20, 30, 5)
+playerCar = Car(RED, 20, 30, 5) #zdefiniowanie gracza 1
 playerCar.rect.x = 200
 playerCar.rect.y = 300
 
 
-computerCar = Car(PURPLE, 20, 30, 5)
+computerCar = Car(PURPLE, 20, 30, 5) #zdefiniowanie gracza 2
 computerCar.rect.x = 100
 computerCar.rect.y = 300
-# Add the car to the list of objects
+# doda
 all_sprites_list.add(playerCar)
 all_sprites_list.add(computerCar)
-#Allowing the user to close the window...
+#Ustalenie flagi zamknięcia aplikacji...
 carryOn = True
 clock=pygame.time.Clock()
  
@@ -39,7 +39,7 @@ while carryOn:
             if event.type==pygame.QUIT:
                 carryOn=False
             elif event.type==pygame.KEYDOWN:
-                if event.key==pygame.K_x: #Pressing the x Key will quit the game
+                if event.key==pygame.K_x: #x wychodzi z gry
                      carryOn=False
  
         keys = pygame.key.get_pressed()
@@ -60,23 +60,23 @@ while carryOn:
         if keys[pygame.K_w]:
             computerCar.moveBackward(5)
             
-        #Game Logic
+        #Aktualizacja graczy
         all_sprites_list.update()
  
-        #Drawing on Screen
+        #rysowanie tła
         screen.fill(GREEN)
-        #Draw The Road
+        #rysowanie drogi
         pygame.draw.rect(screen, GREY, [40,0, 200,300])
-        #Draw Line painting on the road
+        #rysowanie lini na drodze
         pygame.draw.line(screen, WHITE, [140,0],[140,300],5)
         
-        #Now let's draw all the sprites in one go. (For now we only have 1 sprite!)
+        #rysowanie wszystkich graczy
         all_sprites_list.draw(screen)
  
-        #Refresh Screen
+        #odświeżenie ekranu
         pygame.display.flip()
  
-        #Number of frames per secong e.g. 60
+        #opźnienie gry 60
         clock.tick(60)
  
 pygame.quit()
