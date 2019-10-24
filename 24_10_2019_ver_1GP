@@ -1,0 +1,75 @@
+import pygame, random
+
+pygame.init() # inicjalizacja gry
+width = 800 # szerokość okna
+height = 600 #wysokość okna
+
+screen = pygame.display.set_mode((width, height)) #włączenie okna z grą
+
+white = (255,255,255) #definicja kolorów
+red = (255,0,0)
+green = (0,255,0)
+black = (0,0,0)
+
+x = 100 #pozycja x gracza
+y = 100 #pozycja y gracza
+r = 30   #promień koła
+rect = pygame.Rect(x-r, y-r, 2*r, 2*r) #zdefiniowanie obszaru gracza
+
+x2 = random.randint(0, width) #losowe parametry przeciwnika
+y2 = random.randint(0, height)
+r2 = random.randint(0, r-10) ##############
+rect2 = pygame.Rect(x2-r2, y2-r2, 2*r2, 2*r2) #zdefiniowanie obszaru gracza
+
+while True:
+   rect.x = x-r
+   rect.y = y-r
+   rect.width = 2*r
+   rect.height = 2*r
+
+   rect2.x = x2-r2
+   rect2.y = y2-r2
+   rect2.width = 2*r2
+   rect2.height = 2*r2
+
+   if rect.colliderect(rect2):
+      x2 = random.randint(0, width)
+      y2 = random.randint(0, height)
+      r += 5
+      r2 = random.randint(0, r-10)##############
+      if r>=100:
+         r=100
+      
+   screen.fill(white) #wypełnienia
+   pygame.draw.circle(screen, green, rect2.center, r2+5) #narysowanie przeciwnika
+   pygame.draw.circle(screen, red, rect.center, r+5) #narysowanie gracz
+   pygame.display.update() #aktualizacja ekranu
+   
+   for event in pygame.event.get(): #zakończenie gray
+      if event.type == pygame.QUIT: #po kliknięciu w x na oknie z grą
+         pygame.quit()
+         
+   keys = pygame.key.get_pressed() #odczyt klawisza z klawiatury
+   if keys[pygame.K_RIGHT]: #ruch w prawo
+      x += 1
+
+   if keys[pygame.K_LEFT]: #ruch w lewo
+      x -= 1
+
+   if keys[pygame.K_UP]: #ruch w górę
+      y -= 1
+
+   if keys[pygame.K_DOWN]: #ruch w dół
+      y += 1
+      
+   if x>width+r:
+      x=0-r
+
+   if x<0-r:
+      x=width+r
+
+   if y>height+r:
+      y=0-r
+
+   if y<0-r:
+      y=height+r
