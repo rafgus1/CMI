@@ -13,6 +13,13 @@ x = 200
 y = 200
 r = 25
 
+xs = -10 #współrzędne strzału x
+ys = -10 #współrzędne strzału y
+dxs = 0 #przesuniecie strzału w poziomie
+dys = 0 #przesuniecie strzału w pionie
+rs = 10 
+czyStrzelilem = False #nie ma strzału
+
 kropki = []
 
 for i in range(0,10):
@@ -25,7 +32,8 @@ for i in range(0,10):
    rect2 = pygame.Rect(x2-r2, y2-r2, 2*r2, 2*r2)
    kropki.append([rect2,kolor,float(x2),dx,float(y2),dy])
 
-rect = pygame.Rect(x-r, y-r, 2*r, 2*r)
+rect = pygame.Rect(x-r, y-r, 2*r, 2*r) #obszar detekcji gracza
+pocisk = pygame.Rect(xs-rs, ys-rs, 2*rs, 2*rs) #obszar detekcji pocisku 
 
 while True:
 
@@ -62,6 +70,21 @@ while True:
       
    pygame.draw.circle(screen, red, rect.center, int(r*1.2)) #narysowanie gracz
 
+   if czyStrzelilem:
+      xs+=dxs #ruch strzału w poziomie
+      ys+=dys #ruch strzału w pionie
+      pocisk.x = xs - rs
+      pocisk.y = ys - rs
+      if xs > width+rs:     ### czy strzał opuścił pole gry
+         czyStrzelilem = False
+      if xs < 0-rs:
+         czyStrzelilem = False
+      if ys > height+rs:
+         czyStrzelilem = False
+      if ys < 0-rs:
+         czyStrzelilem = False
+      pygame.draw.circle(screen, (0, 0, 255), (xs, ys), rs)
+   
    for event in pygame.event.get(): #zakończenie gray
       if event.type == pygame.QUIT: #po kliknięciu w x na oknie z grą
          pygame.quit()
@@ -69,12 +92,50 @@ while True:
    keys = pygame.key.get_pressed() #odczyt klawisza z klawiatury
    if keys[pygame.K_LEFT]: #ruch w lewo
       x -= 1
+      if not czyStrzelilem:
+         dxs = -2
+         dys = 0
    if keys[pygame.K_RIGHT]: #ruch w prawo
       x += 1
+      if not czyStrzelilem:
+         dxs = 2
+         dys = 0
    if keys[pygame.K_UP]: #ruch do góry
       y -= 1
+      if not czyStrzelilem:
+         dxs = 0
+         dys = -2
    if keys[pygame.K_DOWN]: #ruch do dołu
       y += 1
+      if not czyStrzelilem:
+         dxs = 0
+         dys = 2
+         
+   if keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
+      if not czyStrzelilem:
+         dxs = 2
+         dys = 2
+         
+   if keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+      if not czyStrzelilem:
+         dxs = 2
+         dys = -2
+
+   if keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+      if not czyStrzelilem:
+         dxs = -2
+         dys = -2
+         
+   if keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+      if not czyStrzelilem:
+         dxs = -2
+         dys = 2
+
+   if keys[pygame.K_s]:
+      xs = x
+      ys = y
+      czyStrzelilem = True
+      
    
    if x>width+r: #przechodzenie przez prawą krawędź
       x=-r
@@ -108,5 +169,16 @@ while True:
             r-=20
             if r<20:
                r=20
+      if pocisk.colliderect(rect2):
+         czyStrzelilem = False
+         kolor = [random.randint(100,220),random.randint(100,220),random.randint(100,220)]
+         kropka[1] = kolor
+         rect2.x = random.randint(0, width)
+         rect2.y = random.randint(0, height)
+         kropka[2]=float(rect2.x)
+         kropka[4]=float(rect2.y)
+         r2 = random.randint(r-20, r+5)
+         rect2.width = 2*r2
+         rect2.height = 2*r2         
       
    pygame.display.update() #aktualizacja ekranu
