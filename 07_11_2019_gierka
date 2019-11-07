@@ -55,21 +55,23 @@ while True:
       if rect2.x<0-r2:   
          przeciwnik[2]=width+r2 
 
-      if rect2.y>height+r2:   ###@@@
-         przeciwnik[4]=0-r2   ###@@@
+      if rect2.y>height+r2:   
+         przeciwnik[4]=0-r2   
 
-      if rect2.y<0-r2:           ###@@@
-         przeciwnik[4]=height+r2 ###@@@
+      if rect2.y<0-r2:           
+         przeciwnik[4]=height+r2 
          
       pygame.draw.circle(screen, kolor, rect2.center, r2+5)  #narysowanie przeciwnika
 
       if rect.colliderect(rect2):
-         rect2.x = random.randint(0, width)  #####
-         rect2.y = random.randint(0, height) #####
+         przeciwnik[2] = float(random.randint(0, width))  ###@@@ losowanie nowej poozycji przeciwnika
+         przeciwnik[3] = random.random() - 0.5 ###@@@
+         przeciwnik[4] = float(random.randint(0, height)) ###@@@
+         przeciwnik[5] = random.random() - 0.5 ###@@@
          r += 5
          r2 = random.randint(0, r-10)
-         rect2.width = 2*r2   #####
-         rect2.height = 2*r2  #####
+         rect2.width = 2*r2   
+         rect2.height = 2*r2  
          if r>=100:
             r=100
       
