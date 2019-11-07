@@ -19,30 +19,35 @@ rect = pygame.Rect(x-r, y-r, 2*r, 2*r) #zdefiniowanie obszaru gracza
 przeciwnicy =[]#zbiór przeciwników typu rect2
 
 for n in range(0, 10): #generowanie 10 przeciwników
-
    R=random.randint(0,255) #####@
    G=random.randint(0,255) #####@
    B=random.randint(0,255) #####@
    x2 = random.randint(0, width) #losowe parametry przeciwnika
    y2 = random.randint(0, height)
-   r2 = random.randint(0, r-10) ##############
-   rect2 = pygame.Rect(x2-r2, y2-r2, 2*r2, 2*r2) #zdefiniowanie obszaru gracza
-   przeciwnicy.append([rect2,[R,G,B]]) #####@
+   r2 = random.randint(0, r-10) 
+   pozx = float(x2)   ###@@@
+   kierunekx = random.random() - 0.5 ###@@@
+   rect2 = pygame.Rect(x2-r2, y2-r2, 2*r2, 2*r2) 
+   przeciwnicy.append([rect2,[R,G,B],pozx,kierunekx]) ###@@@
 while True:
    rect.x = x-r
    rect.y = y-r
    rect.width = 2*r
    rect.height = 2*r  
-   screen.fill(white) #wypełnienia
-   for przeciwnik in przeciwnicy:  ####@
-      rect2 = przeciwnik[0] #####@
-      kolor = przeciwnik[1]  #####@
-      r2 = int(rect2.width/2) #####
-      rect2.x += 1#####@
-      rect2.y += random.randint(-1,1) #####@
-      if rect2.x>width+r2: #####@
-         rect2.x=0-r2 #####@
-      pygame.draw.circle(screen, kolor, rect2.center, r2+5)  #####@  #narysowanie przeciwnika
+   screen.fill(white) 
+   for przeciwnik in przeciwnicy:  
+      rect2 = przeciwnik[0] 
+      kolor = przeciwnik[1]  
+      pozx = przeciwnik[2] ###@@@
+      kierunekx = przeciwnik[3]  ###@@@
+      pozx += kierunekx ###@@@
+      r2 = int(rect2.width/2) 
+      rect2.x = int(pozx) ###@@@
+      przeciwnik[2] = pozx ###@@@
+      rect2.y += random.randint(-1,1) 
+      if rect2.x>width+r2:   
+         przeciwnik[2]=0-r2 ###@@@
+      pygame.draw.circle(screen, kolor, rect2.center, r2+5)  #narysowanie przeciwnika
 
       if rect.colliderect(rect2):
          rect2.x = random.randint(0, width)  #####
