@@ -47,6 +47,10 @@ while True:
       rect2.y += random.randint(-1,1) 
       if rect2.x>width+r2:   
          przeciwnik[2]=0-r2 ###@@@
+
+      if rect2.x<0-r2:   ###@@@
+         przeciwnik[2]=width+r2 ###@@@
+
       pygame.draw.circle(screen, kolor, rect2.center, r2+5)  #narysowanie przeciwnika
 
       if rect.colliderect(rect2):
