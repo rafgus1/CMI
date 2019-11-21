@@ -1,0 +1,161 @@
+import pygame, random
+
+pygame.init() # inicjalizacja gry
+width = 800 # szerokość okna
+height = 600 #wysokość okna
+
+screen = pygame.display.set_mode((width, height)) #włączenie okna z grą
+
+white = (255,255,255) #definicja kolorów
+red = (255,0,0)
+green = (0,255,0)
+black = (0,0,0)
+
+x = 100 #pozycja x gracza
+y = 100 #pozycja y gracza
+r = 30   #promień koła
+rect = pygame.Rect(x-r, y-r, 2*r, 2*r) #zdefiniowanie obszaru gracza
+
+przeciwnicy =[]#zbiór przeciwników typu rect2
+
+strzal = pygame.Rect(100,100,5,5) #$$$$$
+sx = 0 #$$$$$ kierunek strzału
+sy = 0 #$$$$$ kierunek strzału
+czyStrzelono = False #$$$$$
+
+for n in range(0, 10): #generowanie 10 przeciwników
+   R=random.randint(0,255) 
+   G=random.randint(0,255) 
+   B=random.randint(0,255) 
+   x2 = random.randint(0, width) 
+   y2 = random.randint(0, height)
+   r2 = random.randint(0, r-10) 
+   pozx = float(x2)   
+   kierunekx = random.random() - 0.5 
+   
+   pozy = float(y2)   ###@@@
+   kieruneky = random.random() - 0.5 ###@@@
+   rect2 = pygame.Rect(x2-r2, y2-r2, 2*r2, 2*r2) 
+   przeciwnicy.append([rect2, [R,G,B], pozx, kierunekx, pozy, kieruneky]) ###@@@
+while True:
+   rect.x = x-r
+   rect.y = y-r
+   rect.width = 2*r
+   rect.height = 2*r  
+   screen.fill(white)
+   for przeciwnik in przeciwnicy:  
+      rect2 = przeciwnik[0] 
+      kolor = przeciwnik[1]  
+      pozx = przeciwnik[2] 
+      kierunekx = przeciwnik[3] 
+      pozx += kierunekx 
+      przeciwnik[4]+= przeciwnik[5] ###@@@     
+      r2 = int(rect2.width/2) 
+      rect2.x = int(pozx) 
+      przeciwnik[2] = pozx  
+      rect2.y = int(przeciwnik[4]) ###@@@
+      if rect2.x>width+r2:   
+         przeciwnik[2]=0-r2 
+
+      if rect2.x<0-r2:   
+         przeciwnik[2]=width+r2 
+
+      if rect2.y>height+r2:   
+         przeciwnik[4]=0-r2   
+
+      if rect2.y<0-r2:           
+         przeciwnik[4]=height+r2 
+         
+      pygame.draw.circle(screen, kolor, rect2.center, r2+5)  #narysowanie przeciwnika
+
+      if rect.colliderect(rect2):
+         przeciwnik[2] = float(random.randint(0, width))  ###@@@ losowanie nowej poozycji przeciwnika
+         przeciwnik[3] = random.random() - 0.5 ###@@@
+         przeciwnik[4] = float(random.randint(0, height)) ###@@@
+         przeciwnik[5] = random.random() - 0.5 ###@@@
+         r += 5
+         r2 = random.randint(0, r-10)
+         rect2.width = 2*r2   
+         rect2.height = 2*r2  
+         if r>=100:
+            r=100
+      
+   
+   
+   pygame.draw.circle(screen, red, rect.center, r+5) #narysowanie gracz
+
+   if czyStrzelono: #$$$$
+      pygame.draw.circle(screen, (0,0,255), strzal.center, 5) #$$$$
+
+      for przeciwnik in przeciwnicy:
+         rect2=przeciwnik[0]
+         if strzal.colliderect(rect2):
+            przeciwnik[2] = float(random.randint(0, width))  ###@@@ losowanie nowej poozycji przeciwnika
+            przeciwnik[3] = random.random() - 0.5 ###@@@
+            przeciwnik[4] = float(random.randint(0, height)) ###@@@
+            przeciwnik[5] = random.random() - 0.5 ###@@@
+            r2 = random.randint(0, r-10)
+            rect2.width = 2*r2   
+            rect2.height = 2*r2
+            czyStrzelono = False
+
+      strzal.x+=sx #$$$$
+      strzal.y+=sy #$$$$
+      if strzal.x > width or strzal.x<0:
+         czyStrzelono = False
+         strzal.x = -100
+         strzal.y = -100
+      if strzal.y > height or strzal.y<0:
+         czyStrzelono = False
+         strzal.x = -100
+         strzal.y = -100
+         
+   pygame.display.update() #aktualizacja ekranu
+   
+   for event in pygame.event.get(): #zakończenie gray
+      if event.type == pygame.QUIT: #po kliknięciu w x na oknie z grą
+         pygame.quit()
+         
+   keys = pygame.key.get_pressed() #odczyt klawisza z klawiatury
+   if keys[pygame.K_RIGHT]: #ruch w prawo
+      x += 1
+      if not czyStrzelono:
+         sx = 2 #$$$$$ kierunek strzału
+         sy = 0 #$$$$$ kierunek strzału
+      
+   if keys[pygame.K_LEFT]: #ruch w lewo
+      x -= 1
+      if not czyStrzelono:
+         sx = -2 #$$$$$ kierunek strzału
+         sy = 0 #$$$$$ kierunek strzału
+   
+   if keys[pygame.K_UP]: #ruch w górę
+      y -= 1
+      if not czyStrzelono:
+         sx = 0 #$$$$$ kierunek strzału
+         sy = -2 #$$$$$ kierunek strzału
+
+   if keys[pygame.K_DOWN]: #ruch w dół
+      y += 1
+      if not czyStrzelono:
+         sx = 0 #$$$$$ kierunek strzału
+         sy = 2 #$$$$$ kierunek strzału
+
+   if keys[pygame.K_s]: #$$$$
+      if not czyStrzelono:
+         r-=2
+      czyStrzelono = True #$$$$
+      strzal.center = rect.center #$$$$
+
+
+   if x>width+r:
+      x=0-r
+
+   if x<0-r:
+      x=width+r
+
+   if y>height+r:
+      y=0-r
+
+   if y<0-r:
+      y=height+r
