@@ -88,7 +88,15 @@ while True:
       pygame.draw.circle(screen, (0,0,255), strzal.center, 5) #$$$$
       strzal.x+=sx #$$$$
       strzal.y+=sy #$$$$
-
+      if strzal.x > width or strzal.x<0:
+         czyStrzelono = False
+         strzal.x = -100
+         strzal.y = -100
+      if strzal.y > height or strzal.y<0:
+         czyStrzelono = False
+         strzal.x = -100
+         strzal.y = -100
+         
    pygame.display.update() #aktualizacja ekranu
    
    for event in pygame.event.get(): #zakończenie gray
