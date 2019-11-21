@@ -19,7 +19,7 @@ rect = pygame.Rect(x-r, y-r, 2*r, 2*r) #zdefiniowanie obszaru gracza
 przeciwnicy =[]#zbiór przeciwników typu rect2
 
 strzal = pygame.Rect(100,100,5,5) #$$$$$
-sx = 2 #$$$$$ kierunek strzału
+sx = 0 #$$$$$ kierunek strzału
 sy = 0 #$$$$$ kierunek strzału
 czyStrzelono = False #$$$$$
 
@@ -98,15 +98,23 @@ while True:
    keys = pygame.key.get_pressed() #odczyt klawisza z klawiatury
    if keys[pygame.K_RIGHT]: #ruch w prawo
       x += 1
-
+      sx = 2 #$$$$$ kierunek strzału
+      sy = 0 #$$$$$ kierunek strzału
+      
    if keys[pygame.K_LEFT]: #ruch w lewo
       x -= 1
-
+      sx = -2 #$$$$$ kierunek strzału
+      sy = 0 #$$$$$ kierunek strzału
+   
    if keys[pygame.K_UP]: #ruch w górę
       y -= 1
+      sx = 0 #$$$$$ kierunek strzału
+      sy = -2 #$$$$$ kierunek strzału
 
    if keys[pygame.K_DOWN]: #ruch w dół
       y += 1
+      sx = 0 #$$$$$ kierunek strzału
+      sy = 2 #$$$$$ kierunek strzału
 
    if keys[pygame.K_s]: #$$$$
       czyStrzelono = True #$$$$
