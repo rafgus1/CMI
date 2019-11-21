@@ -18,6 +18,10 @@ rect = pygame.Rect(x-r, y-r, 2*r, 2*r) #zdefiniowanie obszaru gracza
 
 przeciwnicy =[]#zbiór przeciwników typu rect2
 
+strzal = pygame.Rect(100,100,5,5) #$$$$$
+
+czyStrzelono = False #$$$$$
+
 for n in range(0, 10): #generowanie 10 przeciwników
    R=random.randint(0,255) 
    G=random.randint(0,255) 
@@ -37,7 +41,7 @@ while True:
    rect.y = y-r
    rect.width = 2*r
    rect.height = 2*r  
-   screen.fill(white) 
+   screen.fill(white)
    for przeciwnik in przeciwnicy:  
       rect2 = przeciwnik[0] 
       kolor = przeciwnik[1]  
@@ -78,6 +82,10 @@ while True:
    
    
    pygame.draw.circle(screen, red, rect.center, r+5) #narysowanie gracz
+
+   if czyStrzelono: #$$$$
+      pygame.draw.circle(screen, (0,0,255), strzal.center, 5) #$$$$
+
    pygame.display.update() #aktualizacja ekranu
    
    for event in pygame.event.get(): #zakończenie gray
@@ -96,7 +104,12 @@ while True:
 
    if keys[pygame.K_DOWN]: #ruch w dół
       y += 1
-      
+
+   if keys[pygame.K_s]: #$$$$
+      czyStrzelono = True #$$$$
+      #strzal.x = rect.x #$$$$
+      #strzal.y = rect.y #$$$$
+      strzal.center = rect.center #$$$$
    if x>width+r:
       x=0-r
 
