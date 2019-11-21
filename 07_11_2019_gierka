@@ -19,7 +19,8 @@ rect = pygame.Rect(x-r, y-r, 2*r, 2*r) #zdefiniowanie obszaru gracza
 przeciwnicy =[]#zbiór przeciwników typu rect2
 
 strzal = pygame.Rect(100,100,5,5) #$$$$$
-
+sx = 2 #$$$$$ kierunek strzału
+sy = 0 #$$$$$ kierunek strzału
 czyStrzelono = False #$$$$$
 
 for n in range(0, 10): #generowanie 10 przeciwników
@@ -85,6 +86,8 @@ while True:
 
    if czyStrzelono: #$$$$
       pygame.draw.circle(screen, (0,0,255), strzal.center, 5) #$$$$
+      strzal.x+=sx #$$$$
+      strzal.y+=sy #$$$$
 
    pygame.display.update() #aktualizacja ekranu
    
