@@ -59,7 +59,16 @@ body{
 	let keyV = {}; //wciśnięte klawisza
 	document.addEventListener("keydown",function(e){
 		let key = e.keyCode;
-		console.log(e);
+		console.log(key);
+		if(key===37){
+			keyV.left = true}
+		else if(key===38){
+			keyV.up = true}
+		else if(key===39){
+			keyV.right = true}
+		else if(key===40){
+			keyV.down = true}
+		console.log(keyV);	
 	});
 </script>
 </body>
