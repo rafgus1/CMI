@@ -30,18 +30,32 @@ body{
 	bottom: 20%;
 	left: 45%;
 }
+.punkty{
+	color: red;
+}
 </style>
 </head>
 <body>
 
-<div class="menu">Punkty: 0</div>
+<div class="menu">Punkty:
+	<span class="punkty">0</span></div>
 <div class="kontener">
 	<div class="przycisk">Start</div>
 	<div class="gracz"></div>
 </div>
-
 <script>
-
+	const statek=document.querySelector(".gracz");
+	const statek=document.querySelector(".przycisk");
+	const statek=document.querySelector(".punkty");
+	const statek=document.querySelector(".kontener");
+	const kontR = kontener.getBoundingClientRect();
+	let player = {
+		x: 30,
+		speed: 5,
+		fire: false,
+		live: 3,
+		firespeed: 10
+	}
 </script>
 </body>
 </html>
