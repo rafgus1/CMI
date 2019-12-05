@@ -49,6 +49,7 @@ body{
 	const punkty=document.querySelector(".punkty");
 	const kontener=document.querySelector(".kontener");
 	const kontR = kontener.getBoundingClientRect();
+	console.log(kontR.top+" "+kontR.left);
 	let player = {
 		x: 30,
 		speed: 5,
@@ -82,11 +83,10 @@ body{
 	function update(){
 		let tempLeft = statek.offsetLeft; 
         let tempTop = statek.offsetTop;
-		console.log("start");
-		if(keyV.left){
+		if(keyV.left && tempLeft>kontR.left+player.speed){
 			tempLeft-=player.speed;
 		}
-		if(keyV.right){
+		if(keyV.right && tempLeft<kontR.right-105){
 			tempLeft+=player.speed;
 		}
 		if(keyV.up){
@@ -95,9 +95,9 @@ body{
 		if(keyV.down){
 			tempTop+=player.speed;
 		}
-		console.log(tempLeft);
 		statek.style.left = tempLeft+"px";
 		statek.style.top = tempTop+"px";
+		//console.log(tempLeft+", "+tempTop);
 	player.animFrame = requestAnimationFrame(update);
 	};
 	player.animFrame = requestAnimationFrame(update);
