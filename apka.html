@@ -59,7 +59,6 @@ body{
 	let keyV = {}; //wciśnięte klawisza
 	document.addEventListener("keydown",function(e){
 		let key = e.keyCode;
-		console.log(key);
 		if(key===37){
 			keyV.left = true}
 		else if(key===38){
@@ -67,9 +66,41 @@ body{
 		else if(key===39){
 			keyV.right = true}
 		else if(key===40){
-			keyV.down = true}
-		console.log(keyV);	
+			keyV.down = true}	
 	});
+	document.addEventListener("keyup",function(e){
+		let key = e.keyCode;
+		if(key===37){
+			keyV.left = false}
+		else if(key===38){
+			keyV.up = false}
+		else if(key===39){
+			keyV.right = false}
+		else if(key===40){
+			keyV.down = false}	
+	});
+	function update(){
+		let tempLeft = statek.offsetLeft; 
+        let tempTop = statek.offsetTop;
+		console.log("start");
+		if(keyV.left){
+			tempLeft-=player.speed;
+		}
+		if(keyV.right){
+			tempLeft+=player.speed;
+		}
+		if(keyV.up){
+			tempTop-=player.speed;
+		}
+		if(keyV.down){
+			tempTop+=player.speed;
+		}
+		console.log(tempLeft);
+		statek.style.left = tempLeft+"px";
+		statek.style.top = tempTop+"px";
+	player.animFrame = requestAnimationFrame(update);
+	};
+	player.animFrame = requestAnimationFrame(update);
 </script>
 </body>
 </html>
