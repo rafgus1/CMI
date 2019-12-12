@@ -11,6 +11,7 @@ body{
 	font-size: 2em;
 }
 .kontener{
+	position: absolute;
 	width: 90%;
 	height: 80%;
 	background-color: lightblue;
@@ -38,6 +39,8 @@ body{
 }
 
 .enemy{
+	position: absolute;
+	top: 100px;
 	width: 75px;
 	height: 45px;
 	background-image: url('enemy4.png');
@@ -70,9 +73,11 @@ body{
 	
 	function startGry(){
 		przycisk.style.display = "none";
-		let div = document.createElement("div");
-		div.classList.add("enemy");
-		kontener.appendChild(div);
+		
+		let newEnemy = document.createElement("div");
+		newEnemy.classList.add("enemy");
+		kontener.appendChild(newEnemy);
+		
 		update();
 	}
 	document.addEventListener("keydown",function(e){
