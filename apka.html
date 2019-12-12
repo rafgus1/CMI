@@ -28,8 +28,8 @@ body{
 	
 	background-size: cover;
 	background-image: url('ship.png');
-	width: 50px;
-	height: 44px;
+	width: 100px;
+	height: 88px;
 	/*background-color: yellow;*/
 	
 	bottom: 20%;
@@ -53,8 +53,6 @@ body{
 	const przycisk=document.querySelector(".przycisk");
 	const punkty=document.querySelector(".punkty");
 	const kontener=document.querySelector(".kontener");
-	const kontR = kontener.getBoundingClientRect();
-	console.log(kontR.top+" "+kontR.left);
 	let player = {
 		x: 30,
 		speed: 5,
@@ -86,23 +84,24 @@ body{
 			keyV.down = false}	
 	});
 	function update(){
+		const kontR = kontener.getBoundingClientRect();
+		const sR = statek.getBoundingClientRect();
 		let tempLeft = statek.offsetLeft; 
         let tempTop = statek.offsetTop;
 		if(keyV.left && tempLeft>kontR.left+player.speed){
 			tempLeft-=player.speed;
 		}
-		if(keyV.right && tempLeft<kontR.right-105){
+		if(keyV.right && sR.right<kontR.right-player.speed){
 			tempLeft+=player.speed;
 		}
 		if(keyV.up && statek.offsetTop>kontener.offsetTop){
 			tempTop-=player.speed;
 		}
-		if(keyV.down && statek.offsetTop<kontR.height){
+		if(keyV.down && sR.bottom<kontR.bottom-player.speed){
 			tempTop+=player.speed;
 		}
 		statek.style.left = tempLeft+"px";
 		statek.style.top = tempTop+"px";
-		//console.log(tempLeft+", "+tempTop);
 	player.animFrame = requestAnimationFrame(update);
 	};
 	player.animFrame = requestAnimationFrame(update);
