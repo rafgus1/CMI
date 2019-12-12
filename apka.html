@@ -107,7 +107,7 @@ body{
 		const sR = statek.getBoundingClientRect();
 		let tempLeft = statek.offsetLeft; 
         let tempTop = statek.offsetTop;
-		if(keyV.left && tempLeft>kontR.left+player.speed){
+		if(keyV.left && sR.left>kontR.left+player.speed){
 			tempLeft-=player.speed;
 		}
 		if(keyV.right && sR.right<kontR.right-player.speed){
