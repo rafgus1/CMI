@@ -64,6 +64,7 @@ body{
 	let player = {
 		x: 30,
 		speed: 5,
+		enemySpeed: 5, 
 		fire: false,
 		live: 3,
 		firespeed: 10
@@ -72,14 +73,20 @@ body{
 	przycisk.addEventListener("click", startGry);
 	
 	function startGry(){
-		przycisk.style.display = "none";
-		
+		przycisk.style.display = "none";		
 		let newEnemy = document.createElement("div");
 		newEnemy.classList.add("enemy");
-		kontener.appendChild(newEnemy);
-		
+		kontener.appendChild(newEnemy);		
 		update();
 	}
+	
+	function moveEnemy(){
+		const wrog = document.querySelector(".enemy");
+		let x = wrog.offsetLeft;
+		x+=player.enemySpeed;
+		wrog.style.left = x+"px";
+	} 
+	
 	document.addEventListener("keydown",function(e){
 		let key = e.keyCode;
 		if(key===37){
@@ -121,6 +128,7 @@ body{
 		}
 		statek.style.left = tempLeft+"px";
 		statek.style.top = tempTop+"px";
+		moveEnemy();
 		player.animFrame = requestAnimationFrame(update);
 	};
 	//player.animFrame = requestAnimationFrame(update);
