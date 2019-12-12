@@ -97,7 +97,7 @@ body{
 		if(keyV.up && statek.offsetTop>kontener.offsetTop){
 			tempTop-=player.speed;
 		}
-		if(keyV.down){
+		if(keyV.down && statek.offsetTop<kontR.height){
 			tempTop+=player.speed;
 		}
 		statek.style.left = tempLeft+"px";
