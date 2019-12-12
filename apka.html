@@ -25,18 +25,23 @@ body{
 }
 .gracz{
 	position: absolute;
-	
 	background-size: cover;
 	background-image: url('ship.png');
-	width: 100px;
-	height: 88px;
+	width: 75px;
+	height: 66px;
 	/*background-color: yellow;*/
-	
 	bottom: 20%;
 	left: 45%;
 }
 .punkty{
 	color: red;
+}
+
+.enemy{
+	width: 75px;
+	height: 45px;
+	background-image: url('enemy4.png');
+	background-size: cover;
 }
 </style>
 </head>
@@ -61,6 +66,15 @@ body{
 		firespeed: 10
 	}
 	let keyV = {}; //wciśnięte klawisza
+	przycisk.addEventListener("click", startGry);
+	
+	function startGry(){
+		przycisk.style.display = "none";
+		let div = document.createElement("div");
+		div.classList.add("enemy");
+		kontener.appendChild(div);
+		update();
+	}
 	document.addEventListener("keydown",function(e){
 		let key = e.keyCode;
 		if(key===37){
@@ -94,7 +108,7 @@ body{
 		if(keyV.right && sR.right<kontR.right-player.speed){
 			tempLeft+=player.speed;
 		}
-		if(keyV.up && statek.offsetTop>kontener.offsetTop){
+		if(keyV.up && sR.top>kontR.top+player.speed){
 			tempTop-=player.speed;
 		}
 		if(keyV.down && sR.bottom<kontR.bottom-player.speed){
@@ -102,9 +116,9 @@ body{
 		}
 		statek.style.left = tempLeft+"px";
 		statek.style.top = tempTop+"px";
-	player.animFrame = requestAnimationFrame(update);
+		player.animFrame = requestAnimationFrame(update);
 	};
-	player.animFrame = requestAnimationFrame(update);
+	//player.animFrame = requestAnimationFrame(update);
 </script>
 </body>
 </html>
