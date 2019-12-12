@@ -15,6 +15,7 @@ body{
 	height: 80%;
 	background-color: lightblue;
 	margin-left: 5%;
+	background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
 }
 .przycisk{
 	background-color: red;
@@ -24,9 +25,13 @@ body{
 }
 .gracz{
 	position: absolute;
-	width: 100px;
-	height: 20px;
-	background-color: yellow;
+	
+	background-size: cover;
+	background-image: url('ship.png');
+	width: 50px;
+	height: 44px;
+	/*background-color: yellow;*/
+	
 	bottom: 20%;
 	left: 45%;
 }
@@ -89,7 +94,7 @@ body{
 		if(keyV.right && tempLeft<kontR.right-105){
 			tempLeft+=player.speed;
 		}
-		if(keyV.up){
+		if(keyV.up && statek.offsetTop>kontener.offsetTop){
 			tempTop-=player.speed;
 		}
 		if(keyV.down){
