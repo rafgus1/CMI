@@ -12,6 +12,7 @@ body{
 }
 .kontener{
 	position: absolute;
+	display: block;
 	width: 90%;
 	height: 80%;
 	background-color: lightblue;
@@ -74,7 +75,8 @@ body{
 	przycisk.addEventListener("click", startGry);
 	
 	function startGry(){
-		przycisk.style.display = "none";		
+		przycisk.style.display = "none";
+		kontener.style.cursor = "none";
 		let newEnemy = document.createElement("div");
 		newEnemy.classList.add("enemy");
 		newEnemy.kierunek = -1;
@@ -82,12 +84,17 @@ body{
 		update();
 	} 
 	
-	kontener.addEventListener("mousemove", function(e){
-		console.log(e.clientX-kontener.offsetLeft);
+/*	kontener.addEventListener("mousemove", function(e){
+		//console.log(e.clientX-kontener.offsetLeft);
 		keyV.x = e.clientX-kontener.offsetLeft;
 		keyV.y = e.clientY-kontener.offsetTop;
+	});*/
+	document.addEventListener("mousemove", function(e){
+		keyV.cx = e.clientX;
+		keyV.cy = e.clientY;
+		keyV.x = keyV.cx-kontener.offsetLeft;
+		keyV.y = keyV.cy-kontener.offsetTop;
 	});
-	
 	document.addEventListener("keydown",function(e){
 		let key = e.keyCode;
 		if(key===37){
@@ -121,6 +128,7 @@ body{
 	}
 	
 	let kontR = kontener.getBoundingClientRect();
+	const marginesLewy = kontener.offsetLeft;
 	function update(){
 		kontR = kontener.getBoundingClientRect();
 		const sR = statek.getBoundingClientRect();
@@ -141,10 +149,20 @@ body{
 		console.log(keyV.x+" "+keyV.y);*/
 		tempLeft = keyV.x;
 		tempTop = keyV.y;
+		if(keyV.cx<marginesLewy){
+			kontener.style.display = "none";
+			document.body.style.backgroundColor = "red";
+			}
+		else{
+			kontener.style.display = "block";
+			document.body.style.backgroundColor = "silver";
+			}
 		if(keyV.x<0)
-			tempLeft = 0;
+			tempLeft = 0;	
 		if(keyV.x>kontR.width-sR.width)
 			tempLeft = kontR.width-sR.width;
+		if(keyV.y<200)
+			tempTop = 200;
 		if(keyV.y>kontR.height-sR.height)
 			tempTop = kontR.height-sR.height;
 		statek.style.left = tempLeft+"px";
