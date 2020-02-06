@@ -170,10 +170,17 @@ body{
 		const sR = statek.getBoundingClientRect();
 		if(player.fire){
 			strzal.ypos -=5;
+			const wrog = document.querySelector(".enemy");//
+			let x = wrog.offsetLeft;//new
+			let y = wrog.offsetTop;	//new
 			if(strzal.ypos<0){
 				player.fire = false;
 				strzal.classList.add("ukryty");
 			}
+			if((strzal.xpos>x&&strzal.xpos+25<x+75)&&(strzal.ypos>y&&strzal.ypos+25<y+45)){//new
+				player.fire = false;//new
+				strzal.classList.add("ukryty");//new
+			}	//new
 			strzal.style.top = strzal.ypos+"px";
 		}
 		/*let tempLeft = statek.offsetLeft; 
